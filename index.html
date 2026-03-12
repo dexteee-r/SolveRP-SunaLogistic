@@ -3,125 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parchemin de Sunagakure | Animé</title>
+    <title>Accueil - Parchemin de Sunagakure</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="page-accueil">
+
+    <!-- Logo Suna (Haut Gauche) -->
+    <a href="index.html"><img src="img/suna2.png" alt="Logo Suna" class="site-logo"></a>
+
+    <!-- Bouton Discord (Haut Droite) -->
+    <a href="https://discord.gg/mt4Kv3Jj" target="_blank" class="discord-btn">Discord</a>
+
+    <!-- DÉCOR D'ARRIÈRE-PLAN ANIMÉ -->
+    <div class="decor-layer">
+        <div class="suna-orb"></div>
+        <div class="dune dune-back"></div>
+        <div class="dune dune-front"></div>
+        <div class="embers-container">
+            <!-- Les braises sont générées par script.js pour plus d'intensité -->
+        </div>
+    </div>
 
     <header>
         <nav>
             <ul>
-                <li><a class="nav-link active" onclick="changePage('pantheon', event)">Panthéon du Sable</a></li>
-                <li><a class="nav-link" onclick="changePage('hierarchie', event)">Hiérarchie</a></li>
-                <li><a class="nav-link" onclick="changePage('sections', event)">Sections & Directeurs</a></li>
-                <li><a class="nav-link" onclick="changePage('penal', event)">Code Pénal</a></li>
+                <li><a href="index.html" class="nav-link">Accueil</a></li>
+                <li><a href="pantheon.html" class="nav-link">Panthéon du Sable</a></li>
+                <li><a href="hierarchie.html" class="nav-link">Hiérarchie</a></li>
+                <li><a href="sections.html" class="nav-link">Sections & Directeurs</a></li>
+                <li><a href="penal.html" class="nav-link">Code Pénal</a></li>
             </ul>
         </nav>
     </header>
 
     <div class="container">
 
-        <div id="pantheon" class="page-content active">
+        <div id="accueil" class="page-content">
             <div class="section-title">
-                <h1>Panthéon du Sable</h1>
-                <p>Le sable oublie, mais la pierre se souvient. Voici les piliers de Sunagakure.</p>
+                <h1>Bienvenue sur le parchemin de Suna</h1>
+                <p>Vous trouverez toutes les informations nécessaires au bon fonctionnement du village.</p>
             </div>
 
-            <div class="card animated-item">
-                <h2>Rasa, le Poids de l'Or</h2>
-                <p>Maintenir la survie du village dans un désert aride demande des sacrifices. Rasa fut l'un de ces hommes. Élevé au rang de Kazekage alors que le village traversait sa pire crise économique, il utilisa sa maîtrise unique de la Poussière d'Or pour renflouer les caisses de Suna. Un dirigeant de fer qui a transformé la faiblesse du sable en la puissance implacable de l'or.</p>
-            </div>
-
-            <div class="card animated-item">
-                <h2>Chiyo, la Gardienne des Âmes</h2>
-                <p>Experte en poisons et marionnettiste de génie, Chiyo a traversé les époques et les guerres. Retirée du monde, elle a fini par offrir sa propre vie pour réparer les erreurs du passé et assurer l'avenir de la nouvelle génération. Son héritage ne réside pas seulement dans ses parchemins toxiques, mais dans le sacrifice ultime.</p>
-            </div>
-        </div>
-
-        <div id="hierarchie" class="page-content">
-            <div class="section-title">
-                <h1>Hiérarchie du Village</h1>
-                <p>L'ordre est le seul rempart contre le chaos du désert.</p>
-            </div>
-
-            <ul class="hierarchy-list">
-                <li class="animated-item">
-                    <div class="rank">Kazekage</div>
-                    <div>L'Ombre du Vent. Le dirigeant suprême de Sunagakure, protecteur absolu du village et commandant en chef de toutes les forces shinobi.</div>
-                </li>
-                <li class="animated-item">
-                    <div class="rank">Conseil des Anciens</div>
-                    <div>Composé des shinobis les plus sages et expérimentés. Ils conseillent le Kazekage et prennent les décisions politiques majeures.</div>
-                </li>
-                <li class="animated-item">
-                    <div class="rank">Commandant Jōnin</div>
-                    <div>Représentant des Jōnin auprès du Kazekage. Il coordonne les efforts de guerre et la logistique militaire à grande échelle.</div>
-                </li>
-                <li class="animated-item">
-                    <div class="rank">Jōnin & ANBU</div>
-                    <div>L'élite du village. Chargés des missions de rang A et S, des assassinats (ANBU), et de la formation des futures générations.</div>
-                </li>
-                <li class="animated-item">
-                    <div class="rank">Chūnin</div>
-                    <div>Shinobis confirmés, capables de diriger des escouades. Ils constituent l'épine dorsale des forces militaires de Suna.</div>
-                </li>
-                <li class="animated-item">
-                    <div class="rank">Genin</div>
-                    <div>Apprentis shinobis effectuant des missions de soutien et s'entraînant pour maîtriser les arts du désert.</div>
-                </li>
-            </ul>
-        </div>
-
-        <div id="sections" class="page-content">
-            <div class="section-title">
-                <h1>Sections de Sunagakure</h1>
-                <p>Les rouages qui font tourner la machine de guerre du vent.</p>
-            </div>
-
-            <div class="card animated-item">
-                <h2>Brigade des Marionnettistes (Kugutsu)</h2>
-                <h3>Directeur : Kankuro</h3>
-                <p>La fierté de Sunagakure. Cette section s'occupe de la création, de l'entretien et du maniement des marionnettes de combat. Elle gère également les archives contenant les plans des créations de Sasori et Monzaemon.</p>
-            </div>
-
-            <div class="card animated-item">
-                <h2>Section Médicale & Antipoison</h2>
-                <h3>Directrice : [Nom RP]</h3>
-                <p>Spécialisée dans la création de remèdes capables de contrer n'importe quelle toxine du désert. Héritière des travaux de Chiyo, cette unité est vitale pour la survie des troupes en milieu hostile.</p>
-            </div>
-
-            <div class="card animated-item">
-                <h2>Escouade de Traque des Dunes (Keisatsu)</h2>
-                <h3>Directeur : [Nom RP]</h3>
-                <p>La police interne et les pisteurs de Suna. Ils utilisent les oiseaux du désert et leurs sens affûtés pour repérer les intrus, gérer la sécurité du village et traquer les déserteurs (Nukenin).</p>
-            </div>
-        </div>
-
-        <div id="penal" class="page-content">
-            <div class="section-title">
-                <h1>Code Pénal de Suna</h1>
-                <p>La loi du désert est impitoyable. La trahison se paie dans le sang.</p>
-            </div>
-
-            <div class="law-article animated-item">
-                <strong>Article 1 : Désertion</strong>
-                Quitter le village de Sunagakure sans autorisation officielle est considéré comme une trahison absolue. Les déserteurs (Nukenin) seront traqués par les ANBU et exécutés sur place. Leurs corps doivent être détruits pour protéger les secrets du village.
-            </div>
-
-            <div class="law-article animated-item">
-                <strong>Article 2 : Vol de Ressources</strong>
-                L'eau et les matériaux médicaux sont les ressources les plus précieuses de Suna. Tout pillage, détournement ou destruction des réserves du village sera puni de la réclusion à perpétuité dans les prisons souterraines, voire de la peine capitale.
-            </div>
-
-            <div class="law-article animated-item">
-                <strong>Article 3 : Secrets des Marionnettes</strong>
-                Les plans, parchemins et mécanismes internes des marionnettes appartiennent à l'État. Vendre ou divulguer ces informations à un autre village ninja est passible de torture suivie d'une exécution publique.
-            </div>
-
-            <div class="law-article animated-item">
-                <strong>Article 4 : Insubordination en temps de crise</strong>
-                Lors d'une tempête de sable majeure ou d'une attaque ennemie, le refus d'obéir à un ordre direct d'un supérieur entraîne une rétrogradation immédiate et un emprisonnement.
+            <!-- Liste des accès rapides aux autres pages -->
+            <div class="welcome-menu">
+                <a href="pantheon.html" class="card animated-item welcome-link">
+                    <h2>Panthéon du Sable</h2>
+                    <p>Découvrez les légendes et les anciens héros de Sunagakure.</p>
+                </a>
+                
+                <a href="hierarchie.html" class="card animated-item welcome-link">
+                    <h2>Hiérarchie</h2>
+                    <p>Comprendre la chaîne de commandement et les rangs ninjas.</p>
+                </a>
+                
+                <a href="sections.html" class="card animated-item welcome-link">
+                    <h2>Sections & Directeurs</h2>
+                    <p>Les différents départements et services spécialisés du village.</p>
+                </a>
+                
+                <a href="penal.html" class="card animated-item welcome-link">
+                    <h2>Code Pénal</h2>
+                    <p>Les lois strictes qui régissent la vie dans le désert.</p>
+                </a>
             </div>
         </div>
 
