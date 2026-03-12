@@ -460,3 +460,44 @@ footer {
     z-index: 1;
 }
 footer span { color: var(--accent-gold); }
+
+/* --- PAGE DE PRÉ-ACCUEIL (Landing Page) --- */
+#landing-page {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: #000; /* Fond noir */
+    z-index: 10000; /* Au-dessus de tout le reste */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s ease, visibility 1s; /* Disparition fluide */
+}
+
+.landing-content {
+    position: relative;
+    z-index: 2; /* Au-dessus des braises */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.enter-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.enter-btn img {
+    width: 250px; /* Taille ajustée pour le bouton */
+    height: auto;
+    display: block;
+}
+
+.enter-btn:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 25px rgba(198, 166, 100, 0.8)); /* Lueur dorée */
+}
+
