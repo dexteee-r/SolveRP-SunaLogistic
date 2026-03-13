@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 45, 36, 25; /* Nuit désert #2D2419 */
+  --background-start-rgb: 245, 214, 186; /* Ciel aube #F5D6BA */
+  --background-end-rgb: 232, 212, 184; /* Sable clair #E8D4B8 */
+  --primary-rgb: 212, 165, 116; /* Sable doré #D4A574 */
+  --accent-rgb: 201, 162, 39; /* Or Kazekage #C9A227 */
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      rgb(var(--background-start-rgb)),
+      rgb(var(--background-end-rgb))
+    );
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Effet de brume de sable - Ajusté pour le nouveau thème clair */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(212, 165, 116, 0.1) 0%, transparent 70%);
+  animation: sandDrift 30s infinite linear;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes sandDrift {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-3%, -3%); }
+  100% { transform: translate(0, 0); }
+}
+
+@layer components {
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10;
+  }
+}
+
+/* Scrollbar personnalisée style Suna */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #E8D4B8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4A574;
+  border-radius: 5px;
+  border: 2px solid #E8D4B8;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C4956A;
+}
