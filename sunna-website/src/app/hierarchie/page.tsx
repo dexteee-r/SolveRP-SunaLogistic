@@ -3,6 +3,7 @@
 import React from 'react'
 import { TransitionLink } from '@/components/transitions/SandTransition'
 import { Home, ChevronRight, Star, Shield, Swords, Users, GraduationCap } from 'lucide-react'
+import { useScrollReveal, useScrollRevealGroup, useScrollRevealScale } from '@/hooks/useScrollReveal'
 
 const pyramidLevels = [
   { rank: 'Kazekage', kanji: '風影', slots: 1, color: 'from-yellow-500 to-amber-600', textColor: 'text-white' },
@@ -69,6 +70,11 @@ const specialDivisions = [
 ]
 
 export default function HierarchiePage() {
+  const pyramidRef = useScrollRevealScale('[data-scale]', 120)
+  const spotlightRef = useScrollReveal<HTMLDivElement>({ duration: 800 })
+  const ranksRef = useScrollRevealGroup('[data-reveal]', 100)
+  const divisionsRef = useScrollRevealGroup('[data-reveal]', 120)
+
   return (
     <div className="pt-20" style={{ backgroundColor: '#f4e5cc' }}>
       {/* Breadcrumb */}
@@ -126,9 +132,9 @@ export default function HierarchiePage() {
             </div>
 
             {/* Pyramid levels */}
-            <div className="relative flex flex-col items-center gap-2 md:gap-3 py-8">
+            <div ref={pyramidRef} className="relative flex flex-col items-center gap-2 md:gap-3 py-8">
               {pyramidLevels.map((level, idx) => (
-                <div key={level.rank} className="flex flex-col items-center gap-1">
+                <div key={level.rank} data-scale className="flex flex-col items-center gap-1">
                   {/* Rank label */}
                   {idx === 0 && (
                     <span className="text-[10px] text-sand-500 uppercase tracking-widest mb-1">{level.kanji}</span>
@@ -162,7 +168,7 @@ export default function HierarchiePage() {
       {/* Kazekage Spotlight */}
       <section className="py-16 md:py-20">
         <div className="container-suna max-w-4xl">
-          <div className="bg-white rounded-2xl border border-sand-200 shadow-lg overflow-hidden">
+          <div ref={spotlightRef} className="bg-white rounded-2xl border border-sand-200 shadow-lg overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-[280px_1fr]">
               {/* Kazekage silhouette */}
               <div
@@ -210,10 +216,11 @@ export default function HierarchiePage() {
           <h2 className="font-display text-2xl md:text-3xl text-center text-sand-900 mb-12 tracking-wide">
             Les Rangs en Détail
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+          <div ref={ranksRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
             {ranksDetail.map((rank) => (
               <div
                 key={rank.title}
+                data-reveal
                 className={`bg-white rounded-xl border border-sand-200 p-5 text-center
                            shadow-sm hover:shadow-md transition-all duration-300 border-t-4 ${rank.borderColor}`}
               >
@@ -237,11 +244,12 @@ export default function HierarchiePage() {
           <p className="text-sm text-sand-600 text-center mb-10">
             Unités d&apos;élite rattachées directement au Kazekage
           </p>
-          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+          <div ref={divisionsRef} className="flex flex-wrap justify-center gap-4 md:gap-6">
             {specialDivisions.map((div) => (
               <TransitionLink
                 key={div.name}
                 href={div.href}
+                data-reveal
                 className="px-8 py-5 rounded-xl bg-white/60 border border-sand-300
                          hover:bg-white hover:border-accent-gold/40 transition-all duration-300 group text-center min-w-[180px] shadow-sm"
               >

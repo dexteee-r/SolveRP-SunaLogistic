@@ -1,6 +1,10 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 import { Home, ChevronRight, Eye, Heart, Puzzle, GraduationCap, Search, ShieldCheck, Users, ArrowRight } from 'lucide-react'
+import { useScrollReveal, useScrollRevealGroup } from '@/hooks/useScrollReveal'
+import AnimatedCounter from '@/components/animations/AnimatedCounter'
 
 const divisions = [
   {
@@ -88,6 +92,13 @@ const steps = [
 ]
 
 export default function SectionsPage() {
+  const quoteRef = useScrollReveal<HTMLQuoteElement>({ duration: 800 })
+  const statsRef = useScrollRevealGroup('[data-reveal]', 100)
+  const divisionsRef = useScrollRevealGroup('[data-reveal]', 150)
+  const directorsRef = useScrollRevealGroup('[data-reveal]', 80)
+  const stepsRef = useScrollRevealGroup('[data-reveal]', 120)
+  const ctaRef = useScrollReveal<HTMLDivElement>({ duration: 700 })
+
   return (
     <div className="pt-20">
       {/* Breadcrumb */}
@@ -117,20 +128,26 @@ export default function SectionsPage() {
       {/* Quote + Stats */}
       <section className="section-padding bg-sand-50">
         <div className="container-suna">
-          <blockquote className="font-display text-xl md:text-2xl text-sand-700 italic text-center mb-12 max-w-3xl mx-auto">
+          <blockquote ref={quoteRef} className="font-display text-xl md:text-2xl text-sand-700 italic text-center mb-12 max-w-3xl mx-auto">
             &ldquo;Chaque division est un pilier de notre force.&rdquo;
           </blockquote>
-          <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto">
-            <div className="text-center p-4 rounded-xl bg-sand-100">
-              <p className="font-display text-2xl font-bold text-sand-800">6</p>
+          <div ref={statsRef} className="grid grid-cols-3 gap-4 max-w-xl mx-auto">
+            <div data-reveal className="text-center p-4 rounded-xl bg-sand-100">
+              <p className="font-display text-2xl font-bold text-sand-800">
+                <AnimatedCounter target={6} duration={1200} />
+              </p>
               <p className="text-xs text-sand-500 uppercase tracking-wider">Divisions</p>
             </div>
-            <div className="text-center p-4 rounded-xl bg-sand-100">
-              <p className="font-display text-2xl font-bold text-sand-800">23</p>
+            <div data-reveal className="text-center p-4 rounded-xl bg-sand-100">
+              <p className="font-display text-2xl font-bold text-sand-800">
+                <AnimatedCounter target={23} duration={1500} />
+              </p>
               <p className="text-xs text-sand-500 uppercase tracking-wider">Unités</p>
             </div>
-            <div className="text-center p-4 rounded-xl bg-sand-100">
-              <p className="font-display text-2xl font-bold text-sand-800">1,200+</p>
+            <div data-reveal className="text-center p-4 rounded-xl bg-sand-100">
+              <p className="font-display text-2xl font-bold text-sand-800">
+                <AnimatedCounter target={1200} duration={2000} suffix="+" />
+              </p>
               <p className="text-xs text-sand-500 uppercase tracking-wider">Membres</p>
             </div>
           </div>
@@ -139,10 +156,11 @@ export default function SectionsPage() {
 
       {/* Division Showcases */}
       <section className="bg-sand-100/30">
-        <div className="container-suna py-8">
+        <div ref={divisionsRef} className="container-suna py-8">
           {divisions.map((div, i) => (
             <div
               key={div.name}
+              data-reveal
               className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-center py-12
                          ${i < divisions.length - 1 ? 'border-b border-sand-200' : ''}`}
             >
@@ -182,9 +200,9 @@ export default function SectionsPage() {
           <h2 className="font-display text-2xl md:text-3xl text-center text-sand-900 mb-12 tracking-wide">
             Directeurs de Division
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+          <div ref={directorsRef} className="grid grid-cols-2 md:grid-cols-3 gap-6">
             {directors.map((dir) => (
-              <div key={dir.title} className="card-suna p-6 text-center">
+              <div key={dir.title} data-reveal className="card-suna p-6 text-center">
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-sand-100 flex items-center justify-center">
                   <dir.icon className={`w-7 h-7 ${dir.color}`} />
                 </div>
@@ -203,9 +221,9 @@ export default function SectionsPage() {
             Fonctionnement
           </h2>
           <p className="text-center text-sand-500 mb-12 text-sm">Comment ça marche</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div ref={stepsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {steps.map((s, i) => (
-              <div key={s.step} className="relative">
+              <div key={s.step} data-reveal className="relative">
                 <div className="card-suna p-6 text-center h-full">
                   <span className="font-display text-3xl font-bold text-sand-200 block mb-3">{s.step}</span>
                   <h3 className="font-display text-sm font-bold text-sand-800 mb-2">{s.title}</h3>
@@ -222,7 +240,7 @@ export default function SectionsPage() {
 
       {/* CTA */}
       <section className="bg-sand-900 py-16">
-        <div className="container-suna text-center">
+        <div ref={ctaRef} className="container-suna text-center">
           <div className="flex justify-center gap-3 mb-6">
             {divisions.map((div) => (
               <div.icon key={div.name} className={`w-5 h-5 ${div.iconColor} opacity-60`} />

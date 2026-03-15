@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { Home, ChevronRight, FileText, Shield, Swords, AlertTriangle, ScrollText, Eye, Heart, Handshake, ShieldCheck, Sword, Scale } from 'lucide-react'
+import { useScrollReveal, useScrollRevealGroup } from '@/hooks/useScrollReveal'
 
 const tabs = [
   { id: 'code', label: 'Code Fondamental', icon: FileText },
@@ -58,6 +59,13 @@ const sanctions = [
 
 export default function LoisPage() {
   const [activeTab, setActiveTab] = useState('code')
+  const preambuleRef = useScrollReveal<HTMLDivElement>({ duration: 800 })
+  const sealRef = useScrollReveal<HTMLDivElement>({ duration: 700 })
+  const articlesRef = useScrollRevealGroup('[data-reveal]', 120)
+  const devoirsRef = useScrollRevealGroup('[data-reveal]', 100)
+  const sanctionsRef = useScrollRevealGroup('[data-reveal]', 120)
+  const missionsRef = useScrollRevealGroup('[data-reveal]', 120)
+  const protocolesRef = useScrollRevealGroup('[data-reveal]', 120)
 
   return (
     <div className="pt-20">
@@ -74,7 +82,6 @@ export default function LoisPage() {
 
       {/* Hero - Parchment style */}
       <section className="relative py-20 md:py-28 bg-gradient-to-b from-sand-200 to-sand-100 overflow-hidden">
-        {/* Parchment texture */}
         <div className="absolute inset-0 opacity-[0.03]"
              style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }} />
 
@@ -95,7 +102,7 @@ export default function LoisPage() {
           <h2 className="font-display text-2xl md:text-3xl text-center text-sand-900 mb-8 tracking-wide">
             Préambule
           </h2>
-          <div className="bg-white rounded-2xl border border-sand-200 p-8 md:p-12 shadow-sm">
+          <div ref={preambuleRef} className="bg-white rounded-2xl border border-sand-200 p-8 md:p-12 shadow-sm">
             <p className="text-sand-700 leading-loose text-lg">
               <span className="font-display text-5xl float-left mr-3 mt-1 leading-none text-accent-gold">L</span>
               es lois du Village de Suna, établies par les premiers Kazekage, forment le socle immuable de notre
@@ -140,9 +147,9 @@ export default function LoisPage() {
               <h2 className="font-display text-2xl md:text-3xl text-sand-900 mb-10 tracking-wide">
                 I. Code Fondamental
               </h2>
-              <div className="space-y-8">
+              <div ref={articlesRef} className="space-y-8">
                 {articles.map((article) => (
-                  <div key={article.numeral} className="flex gap-6">
+                  <div key={article.numeral} data-reveal className="flex gap-6">
                     <span className="font-display text-4xl md:text-5xl text-sand-300/60 font-bold leading-none select-none min-w-[3rem] text-right">
                       {article.numeral}
                     </span>
@@ -164,9 +171,9 @@ export default function LoisPage() {
               <h2 className="font-display text-2xl md:text-3xl text-sand-900 mb-10 tracking-wide">
                 II. Devoirs du Shinobi
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div ref={devoirsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {devoirs.map((devoir) => (
-                  <div key={devoir.title} className="card-suna p-6 text-center">
+                  <div key={devoir.title} data-reveal className="card-suna p-6 text-center">
                     <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-sand-100 flex items-center justify-center">
                       <devoir.icon className="w-6 h-6 text-sand-600" />
                     </div>
@@ -184,14 +191,14 @@ export default function LoisPage() {
               <h2 className="font-display text-2xl md:text-3xl text-sand-900 mb-10 tracking-wide">
                 III. Règles de Mission
               </h2>
-              <div className="space-y-6">
+              <div ref={missionsRef} className="space-y-6">
                 {[
                   { title: 'Acceptation', desc: 'Toute mission assignée par le bureau des missions doit être acceptée dans les 24 heures. Un refus doit être justifié par écrit au supérieur hiérarchique.' },
                   { title: 'Équipement', desc: 'Le shinobi est responsable de son équipement. Vérification obligatoire avant chaque départ. Le village fournit le matériel standard, les outils spécialisés sont à la charge de la division.' },
                   { title: 'Rapport de mission', desc: 'Un rapport détaillé doit être soumis dans les 48 heures suivant le retour. Il doit inclure : objectifs atteints, obstacles rencontrés, renseignements collectés et état de l\'équipe.' },
                   { title: 'Règle du sacrifice', desc: 'La mission prime sur l\'individu, mais la vie d\'un camarade n\'est jamais sacrifiable par commodité. Le Kazekage actuel a réformé cette règle ancestrale pour valoriser la vie de chaque shinobi.' },
                 ].map((rule) => (
-                  <div key={rule.title} className="bg-white rounded-xl border border-sand-200 p-6">
+                  <div key={rule.title} data-reveal className="bg-white rounded-xl border border-sand-200 p-6">
                     <h3 className="font-display text-base font-bold text-sand-800 mb-2">{rule.title}</h3>
                     <p className="text-sm text-sand-600 leading-relaxed">{rule.desc}</p>
                   </div>
@@ -206,9 +213,9 @@ export default function LoisPage() {
               <h2 className="font-display text-2xl md:text-3xl text-sand-900 mb-10 tracking-wide">
                 IV. Sanctions
               </h2>
-              <div className="flex flex-col gap-4">
+              <div ref={sanctionsRef} className="flex flex-col gap-4">
                 {sanctions.map((s, i) => (
-                  <div key={s.name} className="flex items-stretch gap-4">
+                  <div key={s.name} data-reveal className="flex items-stretch gap-4">
                     <div className={`flex flex-col items-center justify-center w-20 shrink-0 rounded-xl border-2 ${s.color} p-3`}>
                       <span className="font-display text-xl font-bold">{s.level}</span>
                     </div>
@@ -233,14 +240,14 @@ export default function LoisPage() {
               <h2 className="font-display text-2xl md:text-3xl text-sand-900 mb-10 tracking-wide">
                 V. Protocoles
               </h2>
-              <div className="space-y-6">
+              <div ref={protocolesRef} className="space-y-6">
                 {[
                   { title: 'Protocole d\'Alerte Tempête', desc: 'En cas de tempête de sable de niveau 3 ou supérieur, tous les shinobis disponibles sont mobilisés pour la protection des civils. Le Corps Barrière prend le commandement tactique.' },
                   { title: 'Protocole d\'Invasion', desc: 'Activation immédiate de la barrière maximale. Évacuation des civils vers les abris souterrains. Déploiement des ANBU en première ligne. Communication chiffrée uniquement.' },
                   { title: 'Protocole Diplomatique', desc: 'Tout contact avec des shinobis étrangers doit être signalé. Les délégations sont escortées par minimum deux Chūnin. Aucune technique ne doit être démontrée sans autorisation.' },
                   { title: 'Protocole Médical d\'Urgence', desc: 'En cas de blessés multiples, le Corps Médical active le plan triage. Priorité aux cas critiques. Réquisition possible de tous les ninjas ayant des bases de ninjutsu médical.' },
                 ].map((proto) => (
-                  <div key={proto.title} className="bg-white rounded-xl border border-sand-200 p-6">
+                  <div key={proto.title} data-reveal className="bg-white rounded-xl border border-sand-200 p-6">
                     <h3 className="font-display text-base font-bold text-sand-800 mb-2">{proto.title}</h3>
                     <p className="text-sm text-sand-600 leading-relaxed">{proto.desc}</p>
                   </div>
@@ -254,7 +261,7 @@ export default function LoisPage() {
       {/* Official Seal */}
       <section className="py-16 bg-sand-100/50">
         <div className="container-suna text-center">
-          <div className="inline-flex flex-col items-center gap-4">
+          <div ref={sealRef} className="inline-flex flex-col items-center gap-4">
             <div className="w-24 h-24 rounded-full border-4 border-accent-gold/30 flex items-center justify-center bg-sand-50">
               <Scale className="w-10 h-10 text-accent-gold" />
             </div>

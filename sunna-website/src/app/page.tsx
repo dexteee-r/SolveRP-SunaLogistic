@@ -5,6 +5,8 @@ import Hero from '@/components/sections/Hero'
 import NewsCarousel from '@/components/sections/NewsCarousel'
 import { TransitionLink } from '@/components/transitions/SandTransition'
 import { Shield, ScrollText, Users, Newspaper, Swords, Clock, HeartHandshake } from 'lucide-react'
+import { useScrollReveal, useScrollRevealGroup } from '@/hooks/useScrollReveal'
+import AnimatedCounter from '@/components/animations/AnimatedCounter'
 
 const quickAccess = [
   {
@@ -41,15 +43,20 @@ const quickAccess = [
   },
 ]
 
-
 const stats = [
-  { icon: Swords, value: '847', label: 'Shinobis Actifs' },
-  { icon: Shield, value: '12,453', label: 'Missions Complétées' },
-  { icon: Clock, value: '15', label: 'Années de Paix' },
-  { icon: HeartHandshake, value: '4', label: 'Alliances' },
+  { icon: Swords, target: 847, label: 'Shinobis Actifs' },
+  { icon: Shield, target: 12453, label: 'Missions Complétées' },
+  { icon: Clock, target: 15, label: 'Années de Paix' },
+  { icon: HeartHandshake, target: 4, label: 'Alliances' },
 ]
 
 export default function HomePage() {
+  const quoteRef = useScrollReveal<HTMLDivElement>({ duration: 900 })
+  const accessRef = useScrollRevealGroup('[data-reveal]', 120)
+  const statsRef = useScrollRevealGroup('[data-reveal]', 100)
+  const ctaTextRef = useScrollReveal<HTMLDivElement>({ distance: 40 })
+  const ctaImgRef = useScrollReveal<HTMLDivElement>({ delay: 200, distance: 40 })
+
   return (
     <div>
       {/* Hero */}
@@ -66,7 +73,7 @@ export default function HomePage() {
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-sand-50 to-transparent z-[1]" />
         {/* Bottom fade to next section */}
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-sand-100/80 to-transparent z-[1]" />
-        <div className="container-suna text-center max-w-3xl relative z-10">
+        <div ref={quoteRef} className="container-suna text-center max-w-3xl relative z-10">
           <div className="flex items-center justify-center gap-4 mb-8">
             <span className="block h-px w-16 bg-accent-gold/40" />
             <span className="text-accent-gold text-2xl">&loz;</span>
@@ -89,11 +96,12 @@ export default function HomePage() {
           <h2 className="font-display text-2xl md:text-3xl text-center text-sand-900 mb-12 tracking-wide">
             Accès Rapides
           </h2>
-          <div className="grid grid-cols-2 gap-5">
+          <div ref={accessRef} className="grid grid-cols-2 gap-5">
             {quickAccess.map((item) => (
               <TransitionLink
                 key={item.title}
                 href={item.href}
+                data-reveal
                 className="group relative bg-white rounded-2xl border border-sand-200 p-6 md:p-8 text-center
                            shadow-sm hover:shadow-md hover:border-accent-gold/40 transition-all duration-300"
               >
@@ -125,12 +133,12 @@ export default function HomePage() {
           <h2 className="font-display text-xl md:text-2xl text-center text-sand-200 mb-12 tracking-wide">
             Village Statistiques
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div ref={statsRef} className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat) => (
-              <div key={stat.label} className="text-center">
+              <div key={stat.label} data-reveal className="text-center">
                 <stat.icon className="w-6 h-6 text-accent-gold mx-auto mb-3" />
                 <p className="font-display text-3xl md:text-4xl font-bold text-sand-100 mb-1">
-                  {stat.value}
+                  <AnimatedCounter target={stat.target} />
                 </p>
                 <p className="text-xs text-sand-500 uppercase tracking-wider">
                   {stat.label}
@@ -145,7 +153,7 @@ export default function HomePage() {
       <section id="rejoindre" className="section-padding bg-sand-100/50">
         <div className="container-suna">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
+            <div ref={ctaTextRef} className="space-y-6">
               <h2 className="font-display text-3xl md:text-4xl text-sand-900 leading-tight tracking-wide">
                 Rejoignez les rangs de Suna
               </h2>
@@ -158,7 +166,7 @@ export default function HomePage() {
                 Devenir Shinobi
               </TransitionLink>
             </div>
-            <div className="relative h-80 lg:h-96 rounded-2xl overflow-hidden">
+            <div ref={ctaImgRef} className="relative h-80 lg:h-96 rounded-2xl overflow-hidden">
               <img
                 src="/images/sunagakure-ninja_picture_2.jpg"
                 alt="Shinobis de Sunagakure"
