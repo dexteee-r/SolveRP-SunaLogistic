@@ -1,70 +1,119 @@
 import React from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
-import { Mail, Phone, MapPin, Facebook, Instagram, Twitter } from 'lucide-react'
+import { TransitionLink } from '@/components/transitions/SandTransition'
 
-export default function Footer() {
+const footerSections = [
+  {
+    title: 'Sections du village',
+    links: [
+      { name: 'Hiérarchie', href: '/hierarchie' },
+      { name: 'Sections & Divisions', href: '/sections' },
+      { name: 'Lois de Suna', href: '/lois' },
+      { name: 'Actualités', href: '/actualites' },
+    ],
+  },
+  {
+    title: 'Ressources',
+    links: [
+      { name: 'Devenir Shinobi', href: '#' },
+      { name: 'Archives', href: '/actualites' },
+      { name: 'Code Shinobi', href: '/lois' },
+      { name: 'Carte du village', href: '#' },
+    ],
+  },
+  {
+    title: 'Légal',
+    links: [
+      { name: 'Mentions légales', href: '#' },
+      { name: 'Politique de confidentialité', href: '#' },
+      { name: 'Conditions d\'utilisation', href: '#' },
+    ],
+  },
+]
+
+export default function Footer({ noBgImage = false, bgColor }: { noBgImage?: boolean; bgColor?: string }) {
+  const isLight = !!bgColor
+
   return (
-    <footer className="bg-gray-900 text-gray-300 pt-16 pb-8">
-      <div className="container-custom">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-          {/* Brand & Mission */}
+    <footer
+      className={`relative overflow-hidden ${noBgImage ? '' : 'bg-cover bg-center'}`}
+      style={{
+        ...(noBgImage ? undefined : { backgroundImage: 'url(/images/sunagakure_banderole_footer_1.jpg)' }),
+        ...(bgColor ? { backgroundColor: bgColor } : {}),
+      }}
+    >
+      {/* Top decorative border */}
+      <div className={`h-1 bg-gradient-to-r ${isLight ? 'from-transparent via-accent-gold to-transparent' : 'from-sand-900 via-accent-gold to-sand-900'}`} />
+
+      <div className="container-suna py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* Brand column */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-serif font-bold text-white">Village de Sunna</h2>
-            <p className="text-sm leading-relaxed">
-              Le site officiel du village de Sunna. Un espace dédié aux citoyens et aux visiteurs pour découvrir notre patrimoine et accéder à nos services administratifs.
+            <div className="flex items-center gap-3">
+              <Image
+                src="/images/icons/sunagakure_symbole.png"
+                alt="Symbole de Sunagakure"
+                width={32}
+                height={32}
+                className={`w-8 h-8 ${isLight ? '' : 'invert brightness-200'}`}
+              />
+              <span className={`font-display text-lg tracking-wider ${isLight ? 'text-sand-900' : 'text-sand-100'}`}>
+                SUNAGAKURE
+              </span>
+            </div>
+            <p className={`text-sm leading-relaxed ${isLight ? 'text-sand-600' : 'text-sand-200'}`}>
+              Portail officiel du Village Caché du Sable. Forgés par le vent,
+              sculptés par le sable, unis par la volonté.
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="hover:text-accent transition-colors"><Facebook className="w-5 h-5" /></a>
-              <a href="#" className="hover:text-accent transition-colors"><Instagram className="w-5 h-5" /></a>
-              <a href="#" className="hover:text-accent transition-colors"><Twitter className="w-5 h-5" /></a>
+            {/* Social links */}
+            <div className="flex gap-4 pt-2">
+              {['Discord', 'Twitter', 'Instagram'].map((social) => (
+                <a
+                  key={social}
+                  href="#"
+                  className={`w-9 h-9 rounded-full border flex items-center justify-center text-xs
+                    hover:border-accent-gold hover:text-accent-gold transition-colors
+                    ${isLight ? 'border-sand-400 text-sand-600' : 'border-sand-300/30 text-sand-200'}`}
+                >
+                  {social[0]}
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-6">
-            <h3 className="text-white font-semibold uppercase tracking-wider text-sm">Liens Rapides</h3>
-            <ul className="space-y-4 text-sm">
-              <li><Link href="/commune" className="hover:text-white transition-colors">Découvrir le village</Link></li>
-              <li><Link href="/administration" className="hover:text-white transition-colors">Administration communale</Link></li>
-              <li><Link href="/agenda" className="hover:text-white transition-colors">Agenda des événements</Link></li>
-              <li><Link href="/tourisme" className="hover:text-white transition-colors">Tourisme & Loisirs</Link></li>
-            </ul>
-          </div>
-
-          {/* Useful Docs */}
-          <div className="space-y-6">
-            <h3 className="text-white font-semibold uppercase tracking-wider text-sm">Démarches</h3>
-            <ul className="space-y-4 text-sm">
-              <li><Link href="/administration/documents" className="hover:text-white transition-colors">Formulaires & Documents</Link></li>
-              <li><Link href="/urbanisme" className="hover:text-white transition-colors">Permis d'urbanisme</Link></li>
-              <li><Link href="/contact" className="hover:text-white transition-colors">Signaler un problème</Link></li>
-              <li><Link href="/mentions-legales" className="hover:text-white transition-colors">Mentions Légales</Link></li>
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div className="space-y-6">
-            <h3 className="text-white font-semibold uppercase tracking-wider text-sm">Nous Contacter</h3>
-            <ul className="space-y-4 text-sm">
-              <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-accent shrink-0" />
-                <span>Place de la Mairie 1, <br />1234 Sunna-les-Vents</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-accent shrink-0" />
-                <span>+32 (0) 12 34 56 78</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-accent shrink-0" />
-                <span>contact@sunna.be</span>
-              </li>
-            </ul>
-          </div>
+          {/* Link columns */}
+          {footerSections.map((section) => (
+            <div key={section.title} className="space-y-5">
+              <h3 className={`font-display text-sm uppercase tracking-wider ${isLight ? 'text-sand-900' : 'text-sand-100'}`}>
+                {section.title}
+              </h3>
+              <ul className="space-y-3">
+                {section.links.map((link) => (
+                  <li key={link.name}>
+                    <TransitionLink
+                      href={link.href}
+                      className={`text-sm transition-colors ${isLight ? 'text-sand-600 hover:text-sand-900' : 'text-sand-200 hover:text-white'}`}
+                    >
+                      {link.name}
+                    </TransitionLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
+      </div>
 
-        <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-          <p>© {new Date().getFullYear()} Administration Communale de Sunna. Tous droits réservés.</p>
-          <p>Réalisé avec passion pour notre village.</p>
+      {/* Bottom bar */}
+      <div className={`border-t ${isLight ? 'border-sand-300/40' : 'border-sand-800'}`}>
+        <div className="container-suna py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className={`text-xs ${isLight ? 'text-sand-500' : 'text-sand-300'}`}>
+            &copy; {new Date().getFullYear()} Sunagakure no Sato &mdash; Village Caché du Sable
+          </p>
+          <p className={`text-xs ${isLight ? 'text-sand-400' : 'text-sand-300'}`}>
+            砂隠れの里
+          </p>
         </div>
       </div>
     </footer>

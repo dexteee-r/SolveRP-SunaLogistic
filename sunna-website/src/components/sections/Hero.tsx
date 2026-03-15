@@ -1,56 +1,72 @@
+'use client'
+
 import React from 'react'
-import Button from '@/components/ui/Button'
-import { ArrowDown, Wind } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { ChevronDown } from 'lucide-react'
+import SandParticles from '@/components/features/SandParticles'
 
 export default function Hero() {
   return (
-    <section className="relative h-[90vh] flex items-center justify-center overflow-hidden bg-primary-light">
-      {/* Background Decorative Elements */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full mix-blend-multiply filter blur-[120px] animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-suna-dawn rounded-full mix-blend-multiply filter blur-[150px] animate-pulse delay-1000" />
+    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/hero/sunagakure_village-pov_1_v3.png"
+          alt="Vue panoramique de Sunagakure"
+          fill
+          priority
+          className="object-cover"
+        />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-sand-50 to-transparent" />
       </div>
-      
-      {/* Background Large Kanji */}
-      <div className="absolute inset-0 opacity-10 z-0">
-         <div className="w-full h-full flex items-center justify-center text-secondary/30 text-[40vw] font-serif leading-none select-none">
-          砂
+
+      {/* Floating sand particles */}
+      <SandParticles />
+
+      {/* Main content */}
+      <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+        {/* Suna hourglass symbol */}
+        <div className="mb-8 flex justify-center animate-fade-in">
+          <Image
+            src="/images/icons/sunagakure_symbole.png"
+            alt="Symbole de Sunagakure"
+            width={96}
+            height={96}
+            className="w-20 h-20 md:w-24 md:h-24 invert brightness-200 drop-shadow-lg"
+          />
+        </div>
+
+        {/* Title */}
+        <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-wider text-sand-100 mb-4 animate-fade-in-up drop-shadow-lg">
+          SUNAGAKURE
+        </h1>
+
+        {/* Subtitle with kanji */}
+        <p className="text-sm md:text-base text-sand-200 tracking-[0.3em] uppercase mb-10 animate-fade-in">
+          <span className="font-normal">砂隠れの里</span>
+          <span className="mx-3 text-accent-gold">&bull;</span>
+          Le Village Caché du Sable
+        </p>
+
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up"
+             style={{ animationDelay: '0.3s' }}>
+          <Link href="/hierarchie" className="btn-primary px-8 py-4 text-sm">
+            Explorer le village
+          </Link>
+          <Link href="#rejoindre" className="btn-outline px-8 py-4 text-sm">
+            Rejoindre la communauté
+          </Link>
         </div>
       </div>
 
-      <div className="container-custom relative z-10 text-center">
-        <div className="max-w-4xl mx-auto space-y-10 animate-in fade-in zoom-in duration-1000">
-          <div className="flex flex-col items-center gap-4">
-            <span className="px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-secondary border-2 border-secondary/20 rounded-full bg-white/10 backdrop-blur-sm">
-              Sunagakure | L'Ombre du Vent
-            </span>
-          </div>
-
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif font-bold leading-none tracking-tight">
-            <span className="text-secondary drop-shadow-sm">Le Village </span>
-            <br />
-            <span className="text-primary-dark italic">du Sable</span>
-          </h1>
-
-          <p className="text-lg md:text-xl text-secondary/80 max-w-2xl mx-auto leading-relaxed">
-            Bienvenue sur le portail officiel de Sunna. Entre traditions ancestrales shinobi et modernité municipale, découvrez le cœur battant du Pays du Vent.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-10">
-            <Button variant="primary" size="lg" className="px-10 h-16 shadow-xl hover:shadow-primary/20">
-              Découvrir la Commune
-            </Button>
-            <Button variant="outline" size="lg" className="h-16 px-10 bg-white/20 backdrop-blur-sm hover:bg-white/40 border-secondary/20 text-secondary">
-              Administration & Services
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-4 text-secondary/40 animate-bounce cursor-pointer group">
-        <span className="text-[10px] uppercase tracking-[0.5em] group-hover:text-secondary transition-colors font-bold">Explorer</span>
-        <ArrowDown className="w-4 h-4" />
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-sand-200 animate-scroll-hint">
+        <span className="text-[10px] uppercase tracking-[0.3em]">Découvrir</span>
+        <ChevronDown className="w-5 h-5" />
       </div>
     </section>
   )

@@ -1,26 +1,26 @@
 import type { Metadata } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Inter } from 'next/font/google'
+import { Cinzel } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
-import Breadcrumb from '@/components/layout/Breadcrumb'
-import PageTransition from '@/components/layout/PageTransition'
+import FooterWrapper from '@/components/layout/FooterWrapper'
+import { TransitionProvider } from '@/components/transitions/SandTransition'
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
 })
 
-const playfair = Playfair_Display({ 
+const cinzel = Cinzel({
   subsets: ['latin'],
-  variable: '--font-playfair',
+  variable: '--font-cinzel',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'Village de Sunna | Site Officiel',
-  description: 'Portail officiel du village de Sunna. Actualités, administration, tourisme et cadre de vie.',
+  title: 'Sunagakure | Le Village Caché du Sable',
+  description: 'Portail officiel de Sunagakure no Sato — Le Village Caché du Sable. Hiérarchie, divisions, lois et actualités du village.',
 }
 
 export default function RootLayout({
@@ -29,16 +29,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="font-sans antialiased text-gray-900 bg-gray-50 flex flex-col min-h-screen">
-        <Header />
-        <Breadcrumb />
-        <main className="flex-grow">
-          <PageTransition>
+    <html lang="fr" className={`${inter.variable} ${cinzel.variable}`}>
+      <body className="font-body antialiased flex flex-col min-h-screen">
+        <TransitionProvider>
+          <Header />
+          <main className="flex-grow">
             {children}
-          </PageTransition>
-        </main>
-        <Footer />
+          </main>
+          <FooterWrapper />
+        </TransitionProvider>
       </body>
     </html>
   )
