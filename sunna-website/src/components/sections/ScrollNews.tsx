@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Circle } from "@phosphor-icons/react";
+import { ChevronDown } from "lucide-react";
 
-const NEWS_ITEMS = [
+const RECENT_NEWS = [
   {
     id: "01",
     date: "12 MARS 2026",
@@ -35,6 +36,37 @@ const NEWS_ITEMS = [
   },
 ];
 
+const OLDER_NEWS = [
+  {
+    id: "05",
+    date: "03 MARS 2026",
+    title: "Célébration Annuelle du Festival du Sable",
+    excerpt:
+      "Le village se prépare pour le plus grand événement culturel et festif de l'année. Trois jours de célébrations, de démonstrations martiales et de spectacles de marionnettes.",
+  },
+  {
+    id: "06",
+    date: "01 MARS 2026",
+    title: "Portrait de la Brigade des Marionnettistes : Tradition et Innovation",
+    excerpt:
+      "Comment l'art ancestral du Kugutsu évolue avec les nouvelles techniques de combat modernes. Une plongée au cœur de la division la plus emblématique de Suna.",
+  },
+  {
+    id: "07",
+    date: "28 FÉV 2026",
+    title: "Mission de Rang S Accomplie avec Succès",
+    excerpt:
+      "Une équipe d'élite revient d'une mission critique aux confins du Pays de la Terre. Les détails restent classifiés par ordre du Kazekage.",
+  },
+  {
+    id: "08",
+    date: "22 FÉV 2026",
+    title: "Renforcement de la Barrière Sensorielle du Village",
+    excerpt:
+      "Le Corps Barrière déploie un nouveau système de détection qui étend le périmètre de surveillance de 40%. Une avancée majeure pour la sécurité de Sunagakure.",
+  },
+];
+
 // Le parchemin se déroule vers le bas via scaleY (origin-top)
 const unrollVariants = {
   hidden: { scaleY: 0 },
@@ -61,6 +93,23 @@ const itemVariants = {
   },
 };
 
+// Anciennes actus qui apparaissent en cascade
+const olderItemVariants = {
+  hidden: { opacity: 0, y: 15, filter: "blur(4px)" },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 20,
+      delay: i * 0.15,
+    },
+  }),
+  exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
+};
+
 // Le rouleau du bas tombe avec le déroulement
 const jikuVariants = {
   hidden: { opacity: 0, y: -20 },
@@ -75,8 +124,28 @@ const jikuVariants = {
   },
 };
 
+function NewsArticle({ item, isLast }: { item: typeof RECENT_NEWS[0]; isLast: boolean }) {
+  return (
+    <div className={`relative pb-12 ${!isLast ? "border-b border-stone-200" : ""}`}>
+      <div className="flex items-center gap-3 mb-4">
+        <Circle weight="fill" className="text-red-700 w-2 h-2" />
+        <time className="text-xs sm:text-sm font-mono tracking-widest text-red-700 uppercase">
+          {item.date}
+        </time>
+      </div>
+      <h2 className="text-xl sm:text-2xl font-serif text-stone-900 mb-3 leading-snug">
+        {item.title}
+      </h2>
+      <p className="text-sm sm:text-base text-stone-600 leading-relaxed max-w-[65ch]">
+        {item.excerpt}
+      </p>
+    </div>
+  );
+}
+
 export default function ScrollNews() {
   const [started, setStarted] = useState(false);
+  const [showOlder, setShowOlder] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setStarted(true), 1480);
@@ -102,7 +171,7 @@ export default function ScrollNews() {
       {/* Conteneur fixe pour la baguette supérieure */}
       <div className="flex flex-col items-center w-full max-w-4xl">
 
-        {/* Baguette supérieure en bois (Ten) — toujours visible */}
+        {/* Baguette supérieure en bois (Ten) */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={started ? { opacity: 1 } : { opacity: 0 }}
@@ -133,41 +202,71 @@ export default function ScrollNews() {
                   Chroniques
                 </motion.h1>
 
-                {/* Contenu : Actualités */}
+                {/* Actualités récentes */}
                 <div className="flex flex-col gap-12">
-                  {NEWS_ITEMS.map((item, index) => (
-                    <motion.article
-                      key={item.id}
-                      variants={itemVariants}
-                      className={`relative pb-12 ${
-                        index !== NEWS_ITEMS.length - 1
-                          ? "border-b border-stone-200"
-                          : ""
-                      }`}
-                    >
-                      <div className="flex items-center gap-3 mb-4">
-                        <Circle weight="fill" className="text-red-700 w-2 h-2" />
-                        <time className="text-xs sm:text-sm font-mono tracking-widest text-red-700 uppercase">
-                          {item.date}
-                        </time>
-                      </div>
-
-                      <h2 className="text-xl sm:text-2xl font-serif text-stone-900 mb-3 leading-snug">
-                        {item.title}
-                      </h2>
-
-                      <p className="text-sm sm:text-base text-stone-600 leading-relaxed max-w-[65ch]">
-                        {item.excerpt}
-                      </p>
+                  {RECENT_NEWS.map((item, index) => (
+                    <motion.article key={item.id} variants={itemVariants}>
+                      <NewsArticle
+                        item={item}
+                        isLast={!showOlder && index === RECENT_NEWS.length - 1}
+                      />
                     </motion.article>
                   ))}
                 </div>
+
+                {/* Anciennes actualités */}
+                <AnimatePresence>
+                  {showOlder && (
+                    <div className="flex flex-col gap-12 mt-12">
+                      {OLDER_NEWS.map((item, index) => (
+                        <motion.article
+                          key={item.id}
+                          custom={index}
+                          variants={olderItemVariants}
+                          initial="hidden"
+                          animate="visible"
+                          exit="exit"
+                        >
+                          <NewsArticle
+                            item={item}
+                            isLast={index === OLDER_NEWS.length - 1}
+                          />
+                        </motion.article>
+                      ))}
+                    </div>
+                  )}
+                </AnimatePresence>
+
+                {/* Flèche vers le bas */}
+                <motion.div variants={itemVariants} className="mt-12 flex justify-center">
+                  <button
+                    onClick={() => setShowOlder(!showOlder)}
+                    className="group flex flex-col items-center gap-2 text-stone-400 hover:text-red-700 transition-colors duration-300"
+                  >
+                    <span className="text-xs font-mono tracking-widest uppercase">
+                      {showOlder ? "Masquer les archives" : "Anciennes chroniques"}
+                    </span>
+                    <motion.div
+                      animate={{
+                        y: [0, 6, 0],
+                        rotate: showOlder ? 180 : 0,
+                      }}
+                      transition={{
+                        y: { repeat: Infinity, duration: 2, ease: "easeInOut" },
+                        rotate: { duration: 0.3 },
+                      }}
+                    >
+                      <ChevronDown className="w-5 h-5" />
+                    </motion.div>
+                  </button>
+                </motion.div>
+
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Rouleau inférieur lourd (Jiku) — descend avec le déroulement */}
+        {/* Rouleau inférieur lourd (Jiku) */}
         <motion.div
           variants={jikuVariants}
           initial="hidden"
