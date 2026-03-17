@@ -42,7 +42,7 @@ export default function Header() {
               alt="Symbole de Sunagakure"
               width={40}
               height={40}
-              className="w-10 h-10 invert brightness-200"
+              className="w-10 h-10"
             />
             <div className="flex flex-col">
               <span className="text-lg font-display font-bold text-sand-100 tracking-wider">

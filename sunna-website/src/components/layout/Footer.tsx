@@ -56,7 +56,7 @@ export default function Footer({ noBgImage = false, bgColor }: { noBgImage?: boo
                 alt="Symbole de Sunagakure"
                 width={32}
                 height={32}
-                className={`w-8 h-8 ${isLight ? '' : 'invert brightness-200'}`}
+                className="w-8 h-8"
               />
               <span className={`font-display text-lg tracking-wider ${isLight ? 'text-sand-900' : 'text-sand-100'}`}>
                 SUNAGAKURE

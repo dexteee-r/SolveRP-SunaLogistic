@@ -33,9 +33,9 @@ export default function Hero() {
           <Image
             src="/images/icons/sunagakure_symbole.png"
             alt="Symbole de Sunagakure"
-            width={96}
-            height={96}
-            className="w-20 h-20 md:w-24 md:h-24 invert brightness-200 drop-shadow-lg"
+            width={192}
+            height={192}
+            className="w-40 h-40 md:w-48 md:h-48 drop-shadow-lg"
           />
         </div>
 
