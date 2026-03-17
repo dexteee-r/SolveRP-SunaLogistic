@@ -1,81 +1,11 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
-import { Home, ChevronRight, Mail, Star, Users, MessageCircle, ChevronLeft, ChevronDown, User } from 'lucide-react'
+import { Home, ChevronRight, Mail, Star, Users, MessageCircle } from 'lucide-react'
 import { useScrollReveal, useScrollRevealGroup } from '@/hooks/useScrollReveal'
+import ScrollNews from '@/components/sections/ScrollNews'
 
-const categories = ['All actus', 'Missions', 'Diplomatie', 'Formation', 'Événements']
-
-const featuredArticle = {
-  title: 'La Voie du Vent : Défis et Triomphes de la Nouvelle Génération',
-  desc: 'Un regard approfondi sur les accomplissements exceptionnels de la promotion 2026 de l\'Académie Ninja de Sunagakure. Entre traditions ancestrales et innovations techniques, cette nouvelle génération de shinobis redéfinit ce que signifie porter le bandeau du sable.',
-  author: 'Conseil des Anciens',
-  date: '12 Mars 2026',
-  category: 'Formation',
-}
-
-const sidebarNews = [
-  {
-    title: 'Suna et Konoha Renouvellent le Pacte d\'Alliance',
-    date: '10 Mars 2026',
-    category: 'Diplomatie',
-  },
-  {
-    title: 'Nouvelle Unité de Reconnaissance Déployée en Zone Frontière',
-    date: '08 Mars 2026',
-    category: 'Missions',
-  },
-  {
-    title: 'Célébration Annuelle du Festival du Sable Publié',
-    date: '06 Mars 2026',
-    category: 'Événements',
-  },
-  {
-    title: 'Portrait de la Brigade des Marionnettistes : Tradition et Innovation',
-    date: '04 Mars 2026',
-    category: 'Formation',
-  },
-]
-
-const allNews = [
-  {
-    title: 'Suna et Konoha Renouvellent le Pacte d\'Alliance',
-    desc: 'Les deux villages renforcent leur coopération militaire et médicale pour une nouvelle ère de paix durable.',
-    date: '10 Mars 2026',
-    category: 'Diplomatie',
-  },
-  {
-    title: 'Nouvelle Unité de Reconnaissance Déployée en Zone Frontière',
-    desc: 'Le Kazekage autorise le déploiement d\'une unité spéciale aux confins du Pays du Vent.',
-    date: '08 Mars 2026',
-    category: 'Missions',
-  },
-  {
-    title: 'Examen Chūnin : Résultats et Nouveaux Promus',
-    desc: 'Quinze Genin obtiennent leur promotion après un examen particulièrement exigeant cette année.',
-    date: '05 Mars 2026',
-    category: 'Formation',
-  },
-  {
-    title: 'Célébration Annuelle du Festival du Sable',
-    desc: 'Le village se prépare pour le plus grand événement culturel et festif de l\'année.',
-    date: '03 Mars 2026',
-    category: 'Événements',
-  },
-  {
-    title: 'Portrait de la Brigade des Marionnettistes',
-    desc: 'Comment l\'art ancestral du Kugutsu évolue avec les nouvelles techniques de combat modernes.',
-    date: '01 Mars 2026',
-    category: 'Formation',
-  },
-  {
-    title: 'Mission de Rang S Accomplie avec Succès',
-    desc: 'Une équipe d\'élite revient d\'une mission critique. Les détails restent classifiés par le Kazekage.',
-    date: '28 Fév 2026',
-    category: 'Missions',
-  },
-]
 
 const communityHighlights = [
   { icon: Star, title: 'Mission spotlight', desc: 'Équipe 7 : Mission de rang A accomplie avec succès au Pays de la Terre.' },
@@ -86,17 +16,9 @@ const communityHighlights = [
 const archives = ['Mars 2026', 'Fév 2026', 'Jan 2026', 'Déc 2025', 'Nov 2025', 'Oct 2025', 'Sep 2025', 'Août 2025']
 
 export default function ActualitesPage() {
-  const [activeCategory, setActiveCategory] = useState('All actus')
-  const featuredRef = useScrollReveal<HTMLDivElement>({ duration: 800 })
-  const sidebarRef = useScrollRevealGroup('[data-reveal]', 100)
-  const newsGridRef = useScrollRevealGroup('[data-reveal]', 100)
   const newsletterRef = useScrollReveal<HTMLDivElement>({ duration: 800 })
   const communityRef = useScrollRevealGroup('[data-reveal]', 120)
   const archivesRef = useScrollRevealGroup('[data-reveal]', 60)
-
-  const filteredNews = activeCategory === 'All actus'
-    ? allNews
-    : allNews.filter(n => n.category === activeCategory)
 
   return (
     <div className="pt-20">
@@ -131,125 +53,8 @@ export default function ActualitesPage() {
         </div>
       </section>
 
-      {/* Category Tabs */}
-      <section className="bg-sand-100/50 border-b border-sand-200 sticky top-20 z-30">
-        <div className="container-suna">
-          <div className="flex overflow-x-auto gap-2 py-3 scrollbar-hide">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-5 py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all
-                  ${activeCategory === cat
-                    ? 'bg-accent-turquoise text-white'
-                    : 'bg-sand-200/60 text-sand-600 hover:bg-sand-200'
-                  }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured + Sidebar Layout */}
-      <section className="section-padding bg-sand-50">
-        <div className="container-suna">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Featured Article - Left (2 cols) */}
-            <div ref={featuredRef} className="lg:col-span-2">
-              <span className="inline-block px-3 py-1 bg-accent-turquoise text-white text-[10px] font-bold uppercase tracking-wider rounded mb-6">
-                À la Une
-              </span>
-              <div className="bg-white rounded-2xl border border-sand-200 overflow-hidden shadow-sm">
-                <div className="h-64 md:h-80 bg-gradient-to-br from-sand-300/50 via-sand-200 to-sky-dawn/40 relative">
-                  <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-sand-900/60 to-transparent" />
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                    <span className="w-2 h-2 rounded-full bg-white" />
-                    <span className="w-2 h-2 rounded-full bg-white/40" />
-                    <span className="w-2 h-2 rounded-full bg-white/40" />
-                  </div>
-                  <button className="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white hover:bg-white/30 transition-colors">
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white hover:bg-white/30 transition-colors">
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-
-                <div className="p-6 md:p-8">
-                  <h2 className="font-display text-xl md:text-2xl font-bold text-sand-900 leading-tight mb-4">
-                    {featuredArticle.title}
-                  </h2>
-                  <p className="text-sand-600 leading-relaxed mb-6">{featuredArticle.desc}</p>
-                  <div className="flex items-center gap-3 text-xs text-sand-500">
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-sand-200 flex items-center justify-center">
-                        <User className="w-3 h-3 text-sand-500" />
-                      </div>
-                      <span>Par {featuredArticle.author}</span>
-                    </div>
-                    <span>&bull;</span>
-                    <span>{featuredArticle.date}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Sidebar - Right (1 col) */}
-            <div>
-              <h3 className="font-display text-lg font-bold text-sand-900 mb-6 tracking-wide">
-                Dernières Nouvelles
-              </h3>
-              <div ref={sidebarRef} className="space-y-4">
-                {sidebarNews.map((news) => (
-                  <Link key={news.title} href="#" data-reveal className="block group">
-                    <div className="flex gap-4 p-3 rounded-xl hover:bg-sand-100 transition-colors">
-                      <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-sand-200 to-sand-300/40 shrink-0" />
-                      <div className="flex-grow min-w-0">
-                        <span className="text-[10px] font-semibold text-accent-turquoise uppercase tracking-wider">
-                          {news.category}
-                        </span>
-                        <h4 className="text-sm font-semibold text-sand-800 mt-1 leading-snug group-hover:text-sand-600 transition-colors line-clamp-2">
-                          {news.title}
-                        </h4>
-                        <time className="text-[11px] text-sand-400 mt-1 block">{news.date}</time>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* All News Grid */}
-      <section className="section-padding bg-sand-100/30">
-        <div className="container-suna">
-          <h2 className="font-display text-xl md:text-2xl text-sand-900 mb-8 tracking-wide">
-            Dernières Nouvelles
-          </h2>
-          <div ref={newsGridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredNews.map((news) => (
-              <Link key={news.title} href="#" data-reveal className="card-suna overflow-hidden group">
-                <div className="h-44 bg-gradient-to-br from-sand-200 to-sand-300/30 relative">
-                  <span className="absolute top-3 left-3 px-3 py-1 bg-sand-900/80 text-sand-100 text-[10px] font-bold uppercase tracking-wider rounded">
-                    {news.category}
-                  </span>
-                </div>
-                <div className="p-5">
-                  <time className="text-[11px] text-sand-400 uppercase tracking-wider">{news.date}</time>
-                  <h3 className="font-display text-base font-bold text-sand-800 mt-2 mb-2 group-hover:text-sand-600 transition-colors leading-snug">
-                    {news.title}
-                  </h3>
-                  <p className="text-sm text-sand-500 leading-relaxed line-clamp-2">{news.desc}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Kakemono — Chroniques du Village */}
+      <ScrollNews />
 
       {/* Newsletter Signup */}
       <section className="py-16 bg-sand-50">

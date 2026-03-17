@@ -21,6 +21,9 @@ const cinzel = Cinzel({
 export const metadata: Metadata = {
   title: 'Sunagakure | Le Village Caché du Sable',
   description: 'Portail officiel de Sunagakure no Sato — Le Village Caché du Sable. Hiérarchie, divisions, lois et actualités du village.',
+  icons: {
+    icon: '/favicon/sunagakure_symbole.ico',
+  },
 }
 
 export default function RootLayout({

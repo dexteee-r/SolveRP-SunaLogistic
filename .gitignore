@@ -3,3 +3,9 @@ sunna-website/.next
 
 sunna-website - Copie/node_modules
 sunna-website - Copie/.next
+
+# env files
+.env
+.env.local
+.env.production
+.env*.local
