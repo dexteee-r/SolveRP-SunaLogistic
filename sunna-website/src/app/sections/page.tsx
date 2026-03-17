@@ -1,103 +1,37 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { Home, ChevronRight, Eye, Heart, Puzzle, GraduationCap, Search, ShieldCheck, Users, ArrowRight } from 'lucide-react'
+import { Home, ChevronRight, ArrowRight, X, Users } from 'lucide-react'
 import { useScrollReveal, useScrollRevealGroup } from '@/hooks/useScrollReveal'
-import AnimatedCounter from '@/components/animations/AnimatedCounter'
-
-const divisions = [
-  {
-    number: '1',
-    name: 'ANBU',
-    fullName: 'Forces Spéciales ANBU',
-    desc: 'L\'unité d\'élite opérant dans l\'ombre. Les ANBU exécutent les missions les plus dangereuses : assassinats ciblés, espionnage infiltré et protection rapprochée du Kazekage. Leur identité est un secret absolu.',
-    icon: Eye,
-    color: 'border-division-anbu',
-    bgColor: 'bg-division-anbu/5',
-    iconColor: 'text-division-anbu',
-    badge: 'bg-division-anbu text-sand-100',
-  },
-  {
-    number: '2',
-    name: 'Corps Médical',
-    fullName: 'Division Médicale de Suna',
-    desc: 'Les ninjas médecins sont la colonne vertébrale du village. Spécialisés dans le ninjutsu médical et l\'antidote aux poisons du désert, ils soignent les blessés sur le terrain et gèrent l\'hôpital central de Suna.',
-    icon: Heart,
-    color: 'border-division-medical',
-    bgColor: 'bg-division-medical/5',
-    iconColor: 'text-division-medical',
-    badge: 'bg-division-medical text-white',
-  },
-  {
-    number: '3',
-    name: 'Brigade des Marionnettistes',
-    fullName: 'Brigade des Arts Marionnettistes',
-    desc: 'Tradition unique de Sunagakure. Les marionnettistes utilisent le Kugutsu no Jutsu pour contrôler des marionnettes de combat. Cet art ancestral fait la fierté et la force militaire distinctive de notre village.',
-    icon: Puzzle,
-    color: 'border-division-puppet',
-    bgColor: 'bg-division-puppet/5',
-    iconColor: 'text-division-puppet',
-    badge: 'bg-division-puppet text-white',
-  },
-  {
-    number: '4',
-    name: 'Académie Ninja',
-    fullName: 'Académie de Formation Shinobi',
-    desc: 'L\'académie forme la prochaine génération de shinobis. Du taijutsu de base aux techniques spécialisées du désert, chaque aspirant y apprend les fondamentaux avant de devenir Genin.',
-    icon: GraduationCap,
-    color: 'border-division-academy',
-    bgColor: 'bg-division-academy/5',
-    iconColor: 'text-division-academy',
-    badge: 'bg-division-academy text-white',
-  },
-  {
-    number: '5',
-    name: 'Renseignements',
-    fullName: 'Division du Renseignement',
-    desc: 'Le réseau d\'intelligence de Suna. Collecte d\'informations, contre-espionnage, analyse stratégique et déchiffrement de codes ennemis. Leurs rapports guident les décisions du Kazekage.',
-    icon: Search,
-    color: 'border-division-intelligence',
-    bgColor: 'bg-division-intelligence/5',
-    iconColor: 'text-division-intelligence',
-    badge: 'bg-division-intelligence text-white',
-  },
-  {
-    number: '6',
-    name: 'Corps Barrière',
-    fullName: 'Division de Détection et Barrière',
-    desc: 'Gardiens du village, ils maintiennent la barrière de détection sensorielle qui protège Sunagakure. Spécialisés en fūinjutsu et ninjutsu sensoriel, ils sont la première ligne de défense.',
-    icon: ShieldCheck,
-    color: 'border-division-barrier',
-    bgColor: 'bg-division-barrier/5',
-    iconColor: 'text-division-barrier',
-    badge: 'bg-division-barrier text-sand-900',
-  },
-]
-
-const directors = [
-  { title: 'Directeur ANBU', division: 'ANBU', icon: Eye, color: 'text-division-anbu' },
-  { title: 'Directeur Médical', division: 'Corps Médical', icon: Heart, color: 'text-division-medical' },
-  { title: 'Directeur des Marionnettes', division: 'Marionnettistes', icon: Puzzle, color: 'text-division-puppet' },
-  { title: 'Directeur Académie', division: 'Académie', icon: GraduationCap, color: 'text-division-academy' },
-  { title: 'Directeur Renseignements', division: 'Renseignements', icon: Search, color: 'text-division-intelligence' },
-  { title: 'Directeur Barrière', division: 'Corps Barrière', icon: ShieldCheck, color: 'text-division-barrier' },
-]
-
-const steps = [
-  { step: '01', title: 'Affectation', desc: 'Assignation selon aptitudes après l\'examen Genin' },
-  { step: '02', title: 'Formation Spécialisée', desc: 'Apprentissage des techniques propres à la division' },
-  { step: '03', title: 'Missions de Division', desc: 'Opérations terrain sous supervision d\'un supérieur' },
-  { step: '04', title: 'Progression', desc: 'Montée en grade basée sur les performances et l\'expérience' },
-]
+import { divisions, directors, type Division } from '@/data/divisions'
+import { TransitionLink } from '@/components/transitions/SandTransition'
 
 export default function SectionsPage() {
+  const [selectedDivision, setSelectedDivision] = useState<Division | null>(null)
+
   const quoteRef = useScrollReveal<HTMLQuoteElement>({ duration: 800 })
-  const statsRef = useScrollRevealGroup('[data-reveal]', 100)
   const divisionsRef = useScrollRevealGroup('[data-reveal]', 150)
   const directorsRef = useScrollRevealGroup('[data-reveal]', 80)
-  const stepsRef = useScrollRevealGroup('[data-reveal]', 120)
-  const ctaRef = useScrollReveal<HTMLDivElement>({ duration: 700 })
+
+  const closePopup = useCallback(() => setSelectedDivision(null), [])
+
+  useEffect(() => {
+    if (selectedDivision) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [selectedDivision])
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closePopup()
+    }
+    window.addEventListener('keydown', handleEsc)
+    return () => window.removeEventListener('keydown', handleEsc)
+  }, [closePopup])
 
   return (
     <div className="pt-20">
@@ -113,84 +47,75 @@ export default function SectionsPage() {
       </nav>
 
       {/* Hero */}
-      <section className="relative py-20 md:py-28 bg-gradient-to-b from-sand-300/30 to-sand-100 overflow-hidden">
+      <section className="relative py-12 md:py-16 bg-sand-100 overflow-hidden">
         <div className="container-suna relative z-10 text-center">
-          <p className="text-6xl md:text-8xl font-display text-sand-800/20 mb-4 select-none">部隊</p>
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-sand-900 tracking-wider mb-4">
+          <p className="text-5xl md:text-6xl font-display text-sand-800/20 mb-3 select-none">部隊</p>
+          <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-sand-900 tracking-wider mb-3">
             SECTIONS & DIVISIONS
           </h1>
-          <p className="text-sand-600 max-w-xl mx-auto">
+          <p className="text-sand-600 max-w-xl mx-auto text-sm">
             Les corps spécialisés au service de Suna
           </p>
         </div>
       </section>
 
-      {/* Quote + Stats */}
-      <section className="section-padding bg-sand-50">
+      {/* Quote */}
+      <section className="py-10 bg-sand-50">
         <div className="container-suna">
-          <blockquote ref={quoteRef} className="font-display text-xl md:text-2xl text-sand-700 italic text-center mb-12 max-w-3xl mx-auto">
+          <blockquote ref={quoteRef} className="font-display text-xl md:text-2xl text-sand-700 italic text-center max-w-3xl mx-auto">
             &ldquo;Chaque division est un pilier de notre force.&rdquo;
           </blockquote>
-          <div ref={statsRef} className="grid grid-cols-3 gap-4 max-w-xl mx-auto">
-            <div data-reveal className="text-center p-4 rounded-xl bg-sand-100">
-              <p className="font-display text-2xl font-bold text-sand-800">
-                <AnimatedCounter target={6} duration={1200} />
-              </p>
-              <p className="text-xs text-sand-500 uppercase tracking-wider">Divisions</p>
-            </div>
-            <div data-reveal className="text-center p-4 rounded-xl bg-sand-100">
-              <p className="font-display text-2xl font-bold text-sand-800">
-                <AnimatedCounter target={23} duration={1500} />
-              </p>
-              <p className="text-xs text-sand-500 uppercase tracking-wider">Unités</p>
-            </div>
-            <div data-reveal className="text-center p-4 rounded-xl bg-sand-100">
-              <p className="font-display text-2xl font-bold text-sand-800">
-                <AnimatedCounter target={1200} duration={2000} suffix="+" />
-              </p>
-              <p className="text-xs text-sand-500 uppercase tracking-wider">Membres</p>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* Division Showcases */}
       <section className="bg-sand-100/30">
         <div ref={divisionsRef} className="container-suna py-8">
-          {divisions.map((div, i) => (
-            <div
-              key={div.name}
-              data-reveal
-              className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-center py-12
-                         ${i < divisions.length - 1 ? 'border-b border-sand-200' : ''}`}
-            >
-              {/* Image placeholder - alternates sides */}
-              <div className={`h-64 lg:h-80 rounded-2xl overflow-hidden bg-gradient-to-br from-sand-200 to-sand-300/30 relative
-                             ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div.icon className={`w-20 h-20 ${div.iconColor} opacity-20`} />
+          {divisions.map((div, i) => {
+            const Icon = div.icon
+            return (
+              <div
+                key={div.name}
+                data-reveal
+                className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-center py-12
+                           ${i < divisions.length - 1 ? 'border-b border-sand-200' : ''}`}
+              >
+                {/* Image placeholder - alternates sides */}
+                <div className={`h-64 lg:h-80 rounded-2xl overflow-hidden bg-gradient-to-br from-sand-200 to-sand-300/30 relative
+                               ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Icon className={`w-20 h-20 ${div.iconColor} opacity-20`} />
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-sand-300/30 to-transparent" />
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-sand-300/30 to-transparent" />
-              </div>
 
-              {/* Text content */}
-              <div className={`space-y-4 ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
-                <span className={`inline-block px-3 py-1 ${div.badge} text-[10px] font-bold uppercase tracking-wider rounded`}>
-                  Division {div.number}
-                </span>
-                <h3 className="font-display text-2xl md:text-3xl font-bold text-sand-900 tracking-wide">
-                  {div.number}) {div.name}
-                </h3>
-                <p className="text-sand-600 leading-relaxed">{div.desc}</p>
-                <Link
-                  href="#"
-                  className="inline-flex items-center gap-2 text-sm text-sand-500 hover:text-accent-gold transition-colors font-semibold"
-                >
-                  En savoir plus <ArrowRight className="w-4 h-4" />
-                </Link>
+                {/* Text content */}
+                <div className={`space-y-4 ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
+                  <span className={`inline-block px-3 py-1 ${div.badge} text-[10px] font-bold uppercase tracking-wider rounded`}>
+                    Division {div.number}
+                  </span>
+                  <h3 className="font-display text-2xl md:text-3xl font-bold text-sand-900 tracking-wide">
+                    {div.number}) {div.name}
+                  </h3>
+                  <p className="text-sand-600 leading-relaxed">{div.desc}</p>
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={() => setSelectedDivision(div)}
+                      className="inline-flex items-center gap-2 text-sm text-accent-turquoise hover:text-accent-turquoise/80 transition-colors font-semibold"
+                    >
+                      Aperçu rapide <ArrowRight className="w-4 h-4" />
+                    </button>
+                    <TransitionLink
+                      href={`/sections/${div.slug}`}
+                      className="inline-flex items-center gap-2 text-sm text-sand-500 hover:text-accent-gold transition-colors font-semibold"
+                    >
+                      Page complète <ArrowRight className="w-4 h-4" />
+                    </TransitionLink>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </section>
 
@@ -201,63 +126,113 @@ export default function SectionsPage() {
             Directeurs de Division
           </h2>
           <div ref={directorsRef} className="grid grid-cols-2 md:grid-cols-3 gap-6">
-            {directors.map((dir) => (
-              <div key={dir.title} data-reveal className="card-suna p-6 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-sand-100 flex items-center justify-center">
-                  <dir.icon className={`w-7 h-7 ${dir.color}`} />
+            {directors.map((dir) => {
+              const DirIcon = dir.icon
+              return (
+                <div key={dir.title} data-reveal className="card-suna p-6 text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-sand-100 flex items-center justify-center">
+                    <DirIcon className={`w-7 h-7 ${dir.color}`} />
+                  </div>
+                  <h3 className="font-display text-sm font-bold text-sand-800 mb-1">{dir.title}</h3>
+                  <p className="text-xs text-sand-500">{dir.division}</p>
                 </div>
-                <h3 className="font-display text-sm font-bold text-sand-800 mb-1">{dir.title}</h3>
-                <p className="text-xs text-sand-500">{dir.division}</p>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
 
-      {/* Fonctionnement */}
-      <section className="section-padding bg-sand-100/50">
-        <div className="container-suna">
-          <h2 className="font-display text-2xl md:text-3xl text-center text-sand-900 mb-4 tracking-wide">
-            Fonctionnement
-          </h2>
-          <p className="text-center text-sand-500 mb-12 text-sm">Comment ça marche</p>
-          <div ref={stepsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {steps.map((s, i) => (
-              <div key={s.step} data-reveal className="relative">
-                <div className="card-suna p-6 text-center h-full">
-                  <span className="font-display text-3xl font-bold text-sand-200 block mb-3">{s.step}</span>
-                  <h3 className="font-display text-sm font-bold text-sand-800 mb-2">{s.title}</h3>
-                  <p className="text-xs text-sand-500 leading-relaxed">{s.desc}</p>
-                </div>
-                {i < steps.length - 1 && (
-                  <ArrowRight className="hidden lg:block absolute top-1/2 -right-5 w-4 h-4 text-sand-300 -translate-y-1/2" />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Popup / Modal */}
+      {selectedDivision && (() => {
+        const Icon = selectedDivision.icon
+        return (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            onClick={closePopup}
+          >
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-sand-900/60 backdrop-blur-sm" />
 
-      {/* CTA */}
-      <section className="bg-sand-900 py-16">
-        <div ref={ctaRef} className="container-suna text-center">
-          <div className="flex justify-center gap-3 mb-6">
-            {divisions.map((div) => (
-              <div.icon key={div.name} className={`w-5 h-5 ${div.iconColor} opacity-60`} />
-            ))}
+            {/* Modal */}
+            <div
+              className="relative bg-sand-50 rounded-2xl border border-sand-200 shadow-2xl w-full max-w-2xl max-h-[85vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close button */}
+              <button
+                onClick={closePopup}
+                className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-sand-200 hover:bg-sand-300 flex items-center justify-center transition-colors"
+              >
+                <X className="w-4 h-4 text-sand-700" />
+              </button>
+
+              {/* Header */}
+              <div className="p-6 md:p-8 border-b border-sand-200 bg-sand-100/50">
+                <div className="flex items-center gap-5">
+                  <div className={`w-16 h-16 rounded-xl ${selectedDivision.bgColor} border-2 ${selectedDivision.color} flex items-center justify-center shrink-0`}>
+                    <Icon className={`w-8 h-8 ${selectedDivision.iconColor}`} />
+                  </div>
+                  <div>
+                    <span className={`inline-block px-2 py-0.5 ${selectedDivision.badge} text-[9px] font-bold uppercase tracking-wider rounded mb-1`}>
+                      Division {selectedDivision.number}
+                    </span>
+                    <h2 className="font-display text-xl md:text-2xl font-bold text-sand-900 tracking-wide">
+                      {selectedDivision.fullName}
+                    </h2>
+                  </div>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="p-6 md:p-8 space-y-6">
+                {/* Mission */}
+                <div>
+                  <h3 className="font-display text-sm font-bold text-sand-800 uppercase tracking-wider mb-3">Mission</h3>
+                  <p className="text-sand-600 leading-relaxed text-sm">{selectedDivision.details.mission}</p>
+                </div>
+
+                {/* Spécialités */}
+                <div>
+                  <h3 className="font-display text-sm font-bold text-sand-800 uppercase tracking-wider mb-3">Spécialités</h3>
+                  <ul className="space-y-2">
+                    {selectedDivision.details.specialites.map((spec) => (
+                      <li key={spec} className="flex items-start gap-2 text-sm text-sand-600">
+                        <div className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${selectedDivision.badge.split(' ')[0]}`} />
+                        {spec}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Infos rapides */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-white rounded-lg border border-sand-200 p-4">
+                    <p className="text-[10px] text-sand-400 uppercase tracking-wider mb-1">Effectif</p>
+                    <p className="text-sm text-sand-700 font-semibold">{selectedDivision.details.effectif}</p>
+                  </div>
+                  <div className="bg-white rounded-lg border border-sand-200 p-4">
+                    <p className="text-[10px] text-sand-400 uppercase tracking-wider mb-1">Direction</p>
+                    <div className="flex items-center gap-2">
+                      <Users className="w-4 h-4 text-sand-400" />
+                      <p className="text-sm text-sand-700 font-semibold">{selectedDivision.details.directeur}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Link to full page */}
+                <div className="pt-2">
+                  <TransitionLink
+                    href={`/sections/${selectedDivision.slug}`}
+                    className="btn-primary w-full justify-center"
+                  >
+                    Voir la page complète
+                  </TransitionLink>
+                </div>
+              </div>
+            </div>
           </div>
-          <h2 className="font-display text-2xl md:text-3xl text-sand-100 mb-4 tracking-wide">
-            Trouvez votre voie
-          </h2>
-          <p className="text-sand-500 mb-8 max-w-lg mx-auto text-sm">
-            Chaque shinobi a une place dans nos rangs. Découvrez quelle division correspond
-            à vos compétences et rejoignez l&apos;élite de Sunagakure.
-          </p>
-          <Link href="#" className="btn-turquoise px-10 py-4">
-            Postuler maintenant
-          </Link>
-        </div>
-      </section>
+        )
+      })()}
     </div>
   )
 }

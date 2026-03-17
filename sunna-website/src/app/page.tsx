@@ -4,7 +4,7 @@ import React from 'react'
 import Hero from '@/components/sections/Hero'
 import NewsCarousel from '@/components/sections/NewsCarousel'
 import { TransitionLink } from '@/components/transitions/SandTransition'
-import { Shield, ScrollText, Users, Newspaper, Swords, Clock, HeartHandshake } from 'lucide-react'
+import { Shield, ScrollText, Users, Newspaper, Swords, HeartHandshake } from 'lucide-react'
 import { useScrollReveal, useScrollRevealGroup } from '@/hooks/useScrollReveal'
 import AnimatedCounter from '@/components/animations/AnimatedCounter'
 
@@ -46,7 +46,6 @@ const quickAccess = [
 const stats = [
   { icon: Swords, target: 847, label: 'Shinobis Actifs' },
   { icon: Shield, target: 12453, label: 'Missions Complétées' },
-  { icon: Clock, target: 15, label: 'Années de Paix' },
   { icon: HeartHandshake, target: 4, label: 'Alliances' },
 ]
 

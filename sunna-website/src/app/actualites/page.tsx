@@ -112,9 +112,8 @@ export default function ActualitesPage() {
       </nav>
 
       {/* Hero with eagle background */}
-      <section className="relative py-20 md:py-28 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-sand-400/40 via-sand-300/30 to-sand-100" />
-        <div className="absolute inset-0 bg-gradient-to-r from-sand-900/10 to-transparent" />
+      <section className="relative py-12 md:py-16 overflow-hidden">
+        <div className="absolute inset-0 bg-sand-100" />
         <div className="absolute top-8 right-1/4 opacity-10">
           <svg viewBox="0 0 120 60" className="w-32 h-16" fill="currentColor">
             <path d="M60 30 Q50 10 30 15 Q10 20 0 10 Q5 25 20 25 Q10 30 0 35 Q20 30 35 35 Q50 40 60 30Z" className="text-sand-900"/>
@@ -122,11 +121,11 @@ export default function ActualitesPage() {
           </svg>
         </div>
         <div className="container-suna relative z-10 text-center">
-          <p className="text-6xl md:text-8xl font-display text-sand-800/20 mb-4 select-none">報告</p>
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-sand-900 tracking-wider mb-4">
+          <p className="text-5xl md:text-6xl font-display text-sand-800/20 mb-3 select-none">報告</p>
+          <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-sand-900 tracking-wider mb-3">
             ACTUALITÉS
           </h1>
-          <p className="text-sand-600 max-w-xl mx-auto">
+          <p className="text-sand-600 max-w-xl mx-auto text-sm">
             Les nouvelles du Village Caché du Sable
           </p>
         </div>
