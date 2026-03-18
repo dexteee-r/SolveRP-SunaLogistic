@@ -6,6 +6,7 @@ import Header from '@/components/layout/Header'
 import FooterWrapper from '@/components/layout/FooterWrapper'
 import { TransitionProvider } from '@/components/transitions/SandTransition'
 
+
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',

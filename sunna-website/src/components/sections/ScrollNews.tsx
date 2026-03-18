@@ -127,18 +127,46 @@ const jikuVariants = {
 function NewsArticle({ item, isLast }: { item: typeof RECENT_NEWS[0]; isLast: boolean }) {
   return (
     <div className={`relative pb-12 ${!isLast ? "border-b border-stone-200" : ""}`}>
-      <div className="flex items-center gap-3 mb-4">
-        <Circle weight="fill" className="text-red-700 w-2 h-2" />
-        <time className="text-xs sm:text-sm font-mono tracking-widest text-red-700 uppercase">
-          {item.date}
-        </time>
-      </div>
-      <h2 className="text-xl sm:text-2xl font-serif text-stone-900 mb-3 leading-snug">
-        {item.title}
-      </h2>
-      <p className="text-sm sm:text-base text-stone-600 leading-relaxed max-w-[65ch]">
-        {item.excerpt}
-      </p>
+      {/* Lien interactif avec gestion du Hover et du Focus (Accessibilité) */}
+      <motion.a
+        href={`/chroniques/${item.id}`}
+        className="block group outline-none focus-visible:ring-2 focus-visible:ring-stone-400 rounded-sm"
+        whileHover="hover"
+        whileFocus="hover"
+        initial="rest"
+        animate="rest"
+      >
+        {/* Bloc de contenu qui se décale physiquement */}
+        <motion.div
+          variants={{
+            rest: { x: 0 },
+            hover: {
+              x: 12,
+              transition: {
+                type: "spring",
+                stiffness: 300,
+                damping: 20,
+              },
+            },
+          }}
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <Circle
+              weight="fill"
+              className="text-red-700 w-2 h-2 transition-transform duration-300 group-hover:scale-125"
+            />
+            <time className="text-xs sm:text-sm font-mono tracking-widest text-red-700 uppercase">
+              {item.date}
+            </time>
+          </div>
+          <h2 className="text-xl sm:text-2xl font-serif text-stone-900 mb-3 leading-snug transition-colors duration-300 group-hover:text-black">
+            {item.title}
+          </h2>
+          <p className="text-sm sm:text-base text-stone-600 leading-relaxed max-w-[65ch]">
+            {item.excerpt}
+          </p>
+        </motion.div>
+      </motion.a>
     </div>
   );
 }
