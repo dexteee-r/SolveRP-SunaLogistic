@@ -93,23 +93,6 @@ const itemVariants = {
   },
 };
 
-// Anciennes actus qui apparaissent en cascade
-const olderItemVariants = {
-  hidden: { opacity: 0, y: 15, filter: "blur(4px)" },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 20,
-      delay: i * 0.15,
-    },
-  }),
-  exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
-};
-
 // Le rouleau du bas tombe avec le déroulement
 const jikuVariants = {
   hidden: { opacity: 0, y: -20 },
@@ -233,7 +216,13 @@ export default function ScrollNews() {
                 {/* Actualités récentes */}
                 <div className="flex flex-col gap-12">
                   {RECENT_NEWS.map((item, index) => (
-                    <motion.article key={item.id} variants={itemVariants}>
+                    <motion.article
+                      key={item.id}
+                      variants={itemVariants}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, margin: "-100px" }}
+                    >
                       <NewsArticle
                         item={item}
                         isLast={!showOlder && index === RECENT_NEWS.length - 1}
@@ -249,11 +238,11 @@ export default function ScrollNews() {
                       {OLDER_NEWS.map((item, index) => (
                         <motion.article
                           key={item.id}
-                          custom={index}
-                          variants={olderItemVariants}
+                          variants={itemVariants}
                           initial="hidden"
-                          animate="visible"
-                          exit="exit"
+                          whileInView="visible"
+                          viewport={{ once: true, margin: "-100px" }}
+                          exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }}
                         >
                           <NewsArticle
                             item={item}
