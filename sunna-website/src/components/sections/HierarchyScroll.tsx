@@ -19,9 +19,9 @@ const HIERARCHY_DATA = [
     ],
   },
   {
-    id: "commandant-gounin",
-    role: "Commandant Gounin",
-    title: "Le Bras Droit du Kage",
+    id: "commandant junin",
+    role: "Commandant Jūnin",
+    title: "L'Élite Militaire",
     icon: ShieldChevron,
     description:
       "Bras droit du Kazekage et commandant suprême des forces militaires de Sunagakure. Il coordonne l'ensemble des opérations et assure le relais entre le Kazekage et les troupes sur le terrain.",
@@ -43,12 +43,12 @@ const HIERARCHY_DATA = [
     ],
   },
   {
-    id: "jonin",
-    role: "Jōnin & Unités Spéciales",
-    title: "L'Élite Militaire",
+    id: "tokubetsu-jonin",
+    role: "Tokubetsu Jōnin",
+    title: "Spécialistes d'Élite",
     icon: Crosshair,
     description:
-      "Les ninjas les plus compétents du village. Ils dirigent les missions de rang S, commandent les unités spéciales et supervisent la formation des Genin. Ce rang inclut également les forces spéciales directement rattachées au Kazekage.",
+      "Ninjas ayant atteint un niveau d'expertise exceptionnel dans un domaine spécifique sans pour autant posséder toutes les compétences d'un Jōnin complet. Leur spécialisation en fait des atouts irremplaçables pour les missions requérant une expertise pointue.",
     subDivisions: [
       { name: "ANBU", desc: "Forces spéciales d'élite, opérations secrètes." },
       { name: "Koan", desc: "Maîtres marionnettistes, division tactique." },
@@ -65,18 +65,6 @@ const HIERARCHY_DATA = [
     stats: [
       { label: "Missions", value: "Rang B & C" },
       { label: "Responsabilité", value: "Chefs d'escouade" },
-    ],
-  },
-  {
-    id: "tokubetsu-jonin",
-    role: "Tokubetsu Jōnin",
-    title: "Spécialistes d'Élite",
-    icon: Crosshair,
-    description:
-      "Ninjas ayant atteint un niveau d'expertise exceptionnel dans un domaine spécifique sans pour autant posséder toutes les compétences d'un Jōnin complet. Leur spécialisation en fait des atouts irremplaçables pour les missions requérant une expertise pointue.",
-    stats: [
-      { label: "Rang", value: "Jōnin spécialisé" },
-      { label: "Missions", value: "Rang A (spécialité)" },
     ],
   },
   {
