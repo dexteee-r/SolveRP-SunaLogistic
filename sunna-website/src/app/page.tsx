@@ -27,7 +27,7 @@ const quickAccess = [
   },
   {
     title: 'Sections & Divisions',
-    desc: 'ANBU, Corps Médical, Marionnettistes et toutes nos forces.',
+    desc: 'ANBU, Corps Médical, Koan et toutes nos forces.',
     icon: Users,
     href: '/sections',
     color: 'text-accent-turquoise',

@@ -26,7 +26,7 @@ function FadeSlideDemo() {
         Fade-in + Slide Up
       </h3>
       <div ref={cardsRef} className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        {['ANBU', 'Médical', 'Marionnettistes', 'Éclaireurs'].map((name) => (
+        {['ANBU', 'Médical', 'Koan', 'Éclaireurs'].map((name) => (
           <div
             key={name}
             data-reveal

@@ -74,9 +74,9 @@ export const divisions: Division[] = [
   },
   {
     number: '3',
-    slug: 'marionnettistes',
-    name: 'Brigade des Marionnettistes',
-    fullName: 'Brigade des Arts Marionnettistes',
+    slug: 'koan',
+    name: 'Koan',
+    fullName: 'Division Koan',
     desc: 'Tradition unique de Sunagakure. Les marionnettistes utilisent le Kugutsu no Jutsu pour contrôler des marionnettes de combat. Cet art ancestral fait la fierté et la force militaire distinctive de notre village.',
     icon: Puzzle,
     color: 'border-division-puppet',
@@ -84,7 +84,7 @@ export const divisions: Division[] = [
     iconColor: 'text-division-puppet',
     badge: 'bg-division-puppet text-white',
     details: {
-      mission: 'La Brigade des Marionnettistes perpétue l\'art ancestral du Kugutsu no Jutsu, technique de combat exclusive à Sunagakure. Ses membres conçoivent, entretiennent et manient des marionnettes de combat sophistiquées. La Brigade sert à la fois d\'unité offensive et de centre de recherche en ingénierie ninja.',
+      mission: 'La division Koan perpétue l\'art ancestral du Kugutsu no Jutsu, technique de combat exclusive à Sunagakure. Ses membres conçoivent, entretiennent et manient des marionnettes de combat sophistiquées. La division sert à la fois d\'unité offensive et de centre de recherche en ingénierie ninja.',
       specialites: [
         'Kugutsu no Jutsu — contrôle de marionnettes',
         'Conception et fabrication de marionnettes de combat',
@@ -93,7 +93,7 @@ export const divisions: Division[] = [
         'Ingénierie ninja et prototypes',
       ],
       effectif: '~45 marionnettistes actifs dont 8 maîtres artisans',
-      directeur: 'Directeur de la Brigade des Marionnettistes',
+      directeur: 'Directeur de la Division Koan',
       histoire: 'L\'art des marionnettes de Suna remonte aux origines du village. Perfectionné par des maîtres comme Sasori du Sable Rouge et Chiyo, cet art a connu un renouveau sous la direction de Kankurō. La Brigade intègre aujourd\'hui des technologies modernes à la tradition ancestrale.',
     },
   },
@@ -181,7 +181,7 @@ export function getDivisionBySlug(slug: string): Division | undefined {
 export const directors = [
   { title: 'Directeur ANBU', division: 'ANBU', icon: Eye, color: 'text-division-anbu' },
   { title: 'Directeur Médical', division: 'Corps Médical', icon: Heart, color: 'text-division-medical' },
-  { title: 'Directeur des Marionnettes', division: 'Marionnettistes', icon: Puzzle, color: 'text-division-puppet' },
+  { title: 'Directeur Koan', division: 'Koan', icon: Puzzle, color: 'text-division-puppet' },
   { title: 'Directeur Académie', division: 'Académie', icon: GraduationCap, color: 'text-division-academy' },
   { title: 'Directeur Renseignements', division: 'Renseignements', icon: Search, color: 'text-division-intelligence' },
   { title: 'Directeur Barrière', division: 'Corps Barrière', icon: ShieldCheck, color: 'text-division-barrier' },

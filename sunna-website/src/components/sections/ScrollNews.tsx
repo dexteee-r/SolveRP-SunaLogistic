@@ -47,7 +47,7 @@ const OLDER_NEWS = [
   {
     id: "06",
     date: "01 MARS 2026",
-    title: "Portrait de la Brigade des Marionnettistes : Tradition et Innovation",
+    title: "Portrait de la Division Koan : Tradition et Innovation",
     excerpt:
       "Comment l'art ancestral du Kugutsu évolue avec les nouvelles techniques de combat modernes. Une plongée au cœur de la division la plus emblématique de Suna.",
   },

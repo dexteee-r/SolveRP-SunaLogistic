@@ -14,7 +14,7 @@ const news = [
   },
   {
     title: 'Rénovation de la Grande Muraille',
-    desc: 'La brigade des marionnettistes et le génie civil s\'allient pour renforcer les défenses.',
+    desc: 'La division Koan et le génie civil s\'allient pour renforcer les défenses.',
     date: '08 Mars 2026',
     category: 'Travaux',
     href: '/actualites',
