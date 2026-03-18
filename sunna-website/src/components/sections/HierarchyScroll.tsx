@@ -7,18 +7,6 @@ import type { Icon as PhosphorIcon } from "@phosphor-icons/react";
 
 const HIERARCHY_DATA = [
   {
-    id: "commandant-gounin",
-    role: "Commandant Gounin",
-    title: "Le Bras Droit du Kage",
-    icon: ShieldChevron,
-    description:
-      "Bras droit du Kazekage et commandant suprême des forces militaires de Sunagakure. Il coordonne l'ensemble des opérations et assure le relais entre le Kazekage et les troupes sur le terrain.",
-    stats: [
-      { label: "Autorité", value: "Militaire suprême" },
-      { label: "Rôle", value: "Commandement des forces" },
-    ],
-  },
-  {
     id: "kazekage",
     role: "Le Cinquième Kazekage",
     title: "L'Ombre du Vent",
@@ -28,6 +16,18 @@ const HIERARCHY_DATA = [
     stats: [
       { label: "Autorité", value: "Absolue" },
       { label: "Objectif", value: "Prospérité & Paix" },
+    ],
+  },
+  {
+    id: "commandant-gounin",
+    role: "Commandant Gounin",
+    title: "Le Bras Droit du Kage",
+    icon: ShieldChevron,
+    description:
+      "Bras droit du Kazekage et commandant suprême des forces militaires de Sunagakure. Il coordonne l'ensemble des opérations et assure le relais entre le Kazekage et les troupes sur le terrain.",
+    stats: [
+      { label: "Autorité", value: "Militaire suprême" },
+      { label: "Rôle", value: "Commandement des forces" },
     ],
   },
   {
